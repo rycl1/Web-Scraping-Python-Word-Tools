@@ -1,0 +1,51 @@
+import requests
+from bs4 import BeautifulSoup as bsoup
+
+key = 0 
+
+url = "https://www.researchgate.net/profile/David_Severson"
+r = requests.get(url)
+data = r.text
+soup = bsoup(data, "lxml")
+
+if "profile" not in url:
+  key = 1
+    
+soup
+
+if key == 0:
+
+    abstract = [div.text for div in soup.find_all("div", {"class": "nova-e-text nova-e-text--size-m nova-e-text--family-sans-serif nova-e-text--spacing-none nova-e-text--color-inherit nova-v-publication-item__description nova-v-publication-item__description--clamp-3"})]
+    print (abstract)
+    views = [ul.text for ul in soup.find_all("ul", {"class": "nova-e-list nova-e-list--size-m nova-e-list--type-inline nova-e-list--spacing-none nova-v-publication-item__metrics"})]
+    print (views)
+    date = [li.text for li in soup.find_all("li", {"class": "nova-e-list__item publication-item-meta-items__meta-data-item"})]
+    print (date)
+    title = [div.text for div in soup.find_all("div", {"class": "nova-e-text nova-e-text--size-l nova-e-text--family-sans-serif nova-e-text--spacing-none nova-e-text--color-inherit nova-v-publication-item__title nova-v-publication-item__title--clamp-3"})]
+    print (title)
+    authors = [ul.text for ul in soup.find_all("ul", {"class": "nova-e-list nova-e-list--size-m nova-e-list--type-inline nova-e-list--spacing-none nova-v-publication-item__person-list"})]
+    print(authors)
+    for a in soup.find_all('a', {"class": "nova-e-badge nova-e-badge--color-green nova-e-badge--display-block nova-e-badge--luminosity-high nova-e-badge--size-l nova-e-badge--theme-solid nova-e-badge--radius-m nova-v-publication-item__type"}, href=True):
+        print ('https://www.researchgate.net/', a['href'])
+                
+
+else:
+    
+    
+    abstract = [div.text for div in vx.find_all("div", {"class": "react-container"}, {"id": "rgw10_5ac916071d8d1"})]
+    print(abstract)
+    title = [span.text for span in vx.find_all("span", {"class": "publication-title js-publication-title"})]
+    print(title)
+    authors = [div.text for div in vx.find_all("div", {"class": "authors expandable-authors"})]
+    print(authors)
+    publication = [div.text for div in soup.find_all("div", {"class": "publication-meta"})]
+    print(publication)
+    typeofpub = [span.text for span in soup.find_all("span", {"class": "publication-type"})]
+    print (typeofpub)
+
+
+
+str1 = ''.join(abstract)
+f = open('extraction.json', 'a', encoding = "utf8")
+f.write(str1)
+f.close()
