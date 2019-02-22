@@ -1,0 +1,50 @@
+import requests
+import re
+import codecs
+from bs4 import BeautifulSoup as bsoup
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
+from selenium.common.exceptions import NoSuchElementException
+import time
+
+
+
+url = "https://twitter.com/hashtag/HappyBirthdayZayn?src=tren"
+
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134'}
+
+#r = requests.get(url, headers=headers)
+#data = r.text
+#System.setProperty(r"webdriver.edge.driver",r"C:\Users\ryanh\Downloads\MicrosoftWebDriver.exe")
+driver = webdriver.Edge(executable_path=r"C:\Users\ryanh\Downloads\MicrosoftWebDriver.exe")
+driver.get(url)
+
+SCROLL_PAUSE_TIME = 2
+
+# Get scroll height
+last_height = driver.execute_script("return document.body.scrollHeight;")
+print(last_height)
+
+
+while True:
+    # Scroll down to bottom
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
+    # Wait to load page
+    time.sleep(SCROLL_PAUSE_TIME)
+    
+    # Calculate new scroll height and compare with last scroll height
+    new_height = driver.execute_script("return document.body.scrollHeight;")
+    print(new_height)
+    if new_height == last_height:
+        break
+    last_height = new_height
+
+html = driver.page_source
+soup = bsoup(html, "lxml")
+
+x = [inte.text for inte in soup.find_all('p', {'class': 'TweetTextSize js-tweet-text tweet-text'})]
+
+with codecs.open("file_larger.txt", "w", "utf-8") as output:
+    output.write(str(x))
