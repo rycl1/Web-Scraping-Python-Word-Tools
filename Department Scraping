@@ -1,0 +1,188 @@
+import requests
+import re
+from bs4 import BeautifulSoup as bsoup
+
+
+url = "https://statistics.berkeley.edu/people/noureddine-el-karoui"
+r = requests.get(url)
+data = r.text
+soup = bsoup(data, "lxml")
+
+souplist = [soup]
+soup
+
+#UCB Statistics----------
+
+name = soup.find('h1',{'class': 'title'}).text
+if name:
+    print(name)
+    
+research = soup.find('div',{'class': 'field-item even'}).find_next('span').text
+if research:
+    print(research)
+    
+phone = soup.find('div', text=re.compile("Phone")).find_next('div').text
+if phone:
+    print(phone)
+
+email = soup.find('div', text=re.compile("Email")).find_next('div').text
+if email:
+    print(email)
+    
+website = soup.find('div', text=re.compile("Website")).find_next('div').text
+if website:
+    print(website)
+    
+office = soup.find('div', text=re.compile("Office")).find_next('div').text
+if office:
+    print(office)
+    
+    
+[pub.text for pub in soup.find('div', text=re.compile('Publications')).find_next('div').find_all('p')]
+[interests.text for interests in soup.find('div', text=re.compile('Interests')).find_next('div').find_all('p')]
+[intro.text for intro in soup.find('div',{'class': 'field field-name-body field-type-text-with-summary field-label-hidden'}).find_next('div').find_all('p')]
+
+#UCB Physics----------
+
+name = soup.find('h1', {'class': 'bio-name'}).text
+if name:
+    print(name)
+
+title = soup.find('h2', {'class': 'bio-titles'}).text
+if title:
+    print(title)
+    
+office = soup.find('span', {'class': 'label-inline'}).find_parent('div').text
+#office = soup.find('span',text=re.compile('Office:&nbsp;')).find_next('span').text
+if office:
+    print(office)
+
+webpage = soup.find('div', {'class': 'bio-meta-item'}).find('a').get('href')
+if webpage:
+    print(webpage)
+
+email = soup.find('div', {'class': 'bio-meta'}).find('a').text
+if email:
+    print(email)
+    
+phone = soup.find('div', {'class': 'bio-meta'}).find_next('div').text
+if phone:
+    print(phone)
+        
+phone2 = soup.find('div', {'class': 'bio-meta'}).find_next('div').find_next('div').text
+if phone2:
+    print(phone2)
+
+bio = soup.find('h2',text=re.compile('Biography')).find_next('p').text
+if bio:
+    print(bio)
+print("-----")
+
+
+[pub.text for pub in soup.find('h2', text=re.compile('Publications')).find_next('div').find_all('p')]
+[res.text for res in soup.find('h2', text=re.compile('Research Interests')).find_previous('div').find_all('p')]
+[inte.text for inte in soup.find('h3', {'class': 'bio-researcharea'}).find_all('a')]
+
+#UCB Mathematics----------
+
+name2 = soup.find('h1', {'class': 'title'}).text
+if name2:
+    print(name2)
+    
+title2 = soup.find('div', {'class': 'field field-type-text field-field-faculty-title'}).text
+if title2:
+    print(title2)
+
+berkinterest = soup.find('div',text=re.compile('Research Interests')).find_next().text
+if berkinterest:
+    print(berkinterest)
+    
+interests3 = soup.find('div', {'class': 'field-label-inline-first'}).find_next().text
+if interests3:
+    print(interests3)
+    
+interests4 = soup.find('div', {'class': 'field-label-inline-first'}).find_previous().text
+if interests4:
+    print(interests4)
+    
+contact5 = soup.find('div', {'class': 'field field-type-text field-field-address'}).text
+if contact5:
+    print(contact5)
+    
+#hrefemail = soup.find('div', {'class': 'field-items'}).find('a').get('href')
+#if hrefemail:
+    #print(hrefemail)
+
+#contact7 = soup.find('div', {'class': 'field field-type-text field-field-phone'}).text
+#if contact7:
+    #print(contact7)
+
+[pubberk.text for pubberk in soup.find('ol', {'class': 'bibliography'}).find_all('li')]    
+
+#[contacts.text for contacts in soup.find('fieldset', {'class': 'fieldgroup group-contact'}).find_all('div')]
+
+#UCB Astronomy----------
+
+name = soup.find('div', {'class': 'detail-side'}).find_next('h1')
+if name:
+    print(name.text)
+    
+title = soup.find('div', {'class': 'detail-side'}).find_next('h2')
+if title:
+    print(title.text)
+    
+office = soup.find('div', {'class': 'detail-side'}).find_next('li')
+if office:
+    print(office.text)
+    
+phone = soup.find('ul', {'class': 'list-unstyled'}).find_next('li').find_next('li')
+if phone:
+    print(phone.text)
+    
+email = soup.select('a[href*=mailto]')[0].text
+if email:
+    print(email)
+    
+specialty = soup.find('h3',text=re.compile("Specialty")).find_next('p')
+if specialty:
+    print(specialty.text)
+    
+biography = soup.find('h3',text=re.compile("Biography")).find_next('p')
+if biography:
+    print(biography.text)
+    
+Research = soup.find('h3',text=re.compile("Research")).find_next('p').find_next('p')
+if Research:
+    print(Research.text)
+    
+    
+[projects.text for projects in soup.find('div', {'class': 'project-list'}).find_all('p')]
+
+#UCB Chemistry----------
+
+name = soup.find('h1',{'class': 'title'}).text
+if name:
+    print(name)
+
+title = soup.find('div',{'class': 'field field-name-body field-type-text-with-summary field-label-hidden'}).find('h2').text
+if title:
+    print(title)
+    
+title2 = soup.find('div',{'class': 'field field-name-body field-type-text-with-summary field-label-hidden'}).find('h2').find_next('h2').text
+if title2:
+    print(title2)
+    
+email = soup.select('a[href*=mailto]')[0].text
+if email:
+    print(email)
+    
+office = soup.find('div',{'class': 'field field-name-body field-type-text-with-summary field-label-hidden'}).find_next('p').text
+if office:
+    print(office)
+    
+biosketch = soup.find('h2',text=re.compile("Biosketch")).findAllNext('p')
+for wanted in biosketch:
+    if "420 Latimer" in wanted.text:
+        best = wanted.findAllPrevious('p')
+        print(best)
+        break
