@@ -3,7 +3,7 @@ import re
 from bs4 import BeautifulSoup as bsoup
 
 
-url = "https://statistics.berkeley.edu/people/noureddine-el-karoui"
+url = ""
 r = requests.get(url)
 data = r.text
 soup = bsoup(data, "lxml")
