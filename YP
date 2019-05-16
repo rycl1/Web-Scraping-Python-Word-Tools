@@ -1,0 +1,30 @@
+import requests
+import re
+from bs4 import BeautifulSoup as bsoup
+
+
+
+def parse_listing(keyword,place,testpagecount):
+    
+
+    url = "https://www.yellowpages.com/search?search_terms={0}&geo_location_terms={1}".format(keyword,place)
+    url += ("&page=" + str(testpagecount))
+    
+    r = requests.get(url)
+    data = r.text
+    soup = bsoup(data, "lxml")
+    souplist = [soup]
+
+    #[inte.text for inte in soup.find('div', {'class': 'info'})]
+    resultvalue = soup.find('div', {'class': 'pagination'}).find_next('p').text
+    resultvalue = re.sub("\D", "", resultvalue)
+    resultvalue = int(resultvalue)
+    numberofpgs = (resultvalue/30) + 1 #This still needs to be figured out... how to get the exact number
+    numberofpgs = int(numberofpgs)
+    label_range = list(range(numberofpgs)) # This is the number of times to loop
+
+    print([inte.text for inte in soup.find('div', {'id':'main-content'}).find_all('a', {'class': 'business-name'})])
+    
+    testpagecount += 1
+
+parse_listing("dentists", "st louis", 1)
