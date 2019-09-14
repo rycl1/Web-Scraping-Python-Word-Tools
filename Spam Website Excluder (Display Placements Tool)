@@ -1,0 +1,34 @@
+import requests
+import re
+from bs4 import BeautifulSoup as bsoup
+
+site_list = ["www.iaai.com","www.yeahmotor.com","www.autotrader.com","www.fixya.com","www.Cargurus.com","www.advfn.com","www.mentalflare.com","www.triviaboss.com"]
+type_list = ["car", "cars","collision", "collisions", "repair", "maintenance", "automobile","auto", "vehicle", "vehicles", "fix", "fixing", "trucks", "suv", "suvs"] #Collision & Auto Body Repair
+bad_list = ["celebrity", "celebrities", "leno","seinfeld", "movie", "movies","mayweather","shaq","kardashian","bieber"]
+
+regexp2 = r'[^a-zA-Z\']+'
+
+for x in site_list:
+    url = "https://" + x
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36'}
+    r = requests.get(url, headers=headers)
+    data = r.text
+    soup = bsoup(data, "lxml")
+    for script in soup(["script", "style"]):
+        script.extract() 
+    text = soup.get_text()
+    text2 = text.splitlines()
+    text3 = [re.sub(regexp2, ' ', sent2) for sent2 in text2]
+    text4 = ' '.join(text3).split()
+    text5 = list(map(str.lower, text4))
+    similarity = set(text5).intersection(type_list)
+    bad_sim = set(text5).intersection(bad_list)
+    simmeasure = len(similarity)
+    badsimmeasure = len(bad_sim)
+    if simmeasure >= 3 and badsimmeasure < 2: #relevant words/total words = 20%:
+        print(f'http://{x}{" | "}{"Relevant"}')
+    if simmeasure > 3 and badsimmeasure > 2:
+        print(f'http://{x}{" | "}{"Somewhat Relevant, But Possibly Spam"}')
+    if simmeasure < 3:
+        print(f'http://{x}{" | "}{"Possibly Irrelevant"}')
+   
