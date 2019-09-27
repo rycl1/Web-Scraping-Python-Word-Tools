@@ -1,8 +1,23 @@
-list_terms = ['grundfos','500 gallon plastic dry well','rain water harvesting','irrigation pressure booster','3000 gallon water tank','ace roto mold 1000 gallon','douwnspout sleeve through deck','downspout to sewer pipe connection','fernco couplings','goulds water technology 33d','in ground tank','rain collection system','rain water harvest','rainwater storage tanks','rainwater tank','tanques de agua','water pressure switch','waterpump','1 1 2 hp gould replacement pump three stage','1 2 horsepower pump sprinkler','1 hp booster pump 120v','1 mq','1.5 hp submersible','1000 gallon tank dimensions','12000 litre water tank price','1600 gallon water tank','2 horsepower waterpumps to feed house from water tank','2 inch downspout rain adapter','2 inch pvc downspout','200 gallon tote tank','200 gallon underground tank','200 gallon water tank','2000 gallon storage tanks','2000 gallon water storage tank','220 gpm water punp','220v jet pump 1 1 2hp','rain water tank (test)','gouldtank(test)','grundfos tank (test)','grund fos(test)','(test)grundfos(test)']
-user_list = ["gould", "grundfos", "rainwater", "rain water", "fernco", "grund fos"]
-good_terms = []
 
-for x in list_terms:
-    for s in user_list:
-        if s in x:
-            good_terms.append(x)
+            
+            
+list_terms = ['grundfos','500 gallon plastic dry well','rain water harvesting','irrigation pressure booster','3000 gallon water tank','ace roto mold 1000 gallon','douwnspout sleeve through deck','downspout to sewer pipe connection','fernco couplings','goulds water technology 33d','in ground tank','rain collection system','rain water harvest','rainwater storage tanks','rainwater tank','tanques de agua','water pressure switch','waterpump','1 1 2 hp gould replacement pump three stage','1 2 horsepower pump sprinkler','1 hp booster pump 120v','1 mq','1.5 hp submersible','1000 gallon tank dimensions','12000 litre water tank price','1600 gallon water tank','2 horsepower waterpumps to feed house from water tank','2 inch downspout rain adapter','2 inch pvc downspout','200 gallon tote tank','200 gallon underground tank','200 gallon water tank','2000 gallon storage tanks','2000 gallon water storage tank','220 gpm water punp','220v jet pump 1 1 2hp','rain water tank (test)','gouldtank(test)','grundfos tank (test)','grund fos(test)','(test)grundfos(test)']
+xop = ["gould", "grundfos", "rainwater", "rain water", "fernco", "grund fos"]
+good_terms = []
+cc = []
+print(list_terms)
+
+for zz in list_terms:
+    for s2 in xop:
+        if s2 in zz:
+            good_terms.append(zz)
+            
+for s3 in good_terms:
+    cc.append(list_terms.index(s3))
+    
+for ii in cc:
+    list_terms[ii] = ''
+    
+str_list = list(filter(None, list_terms))
+
+print(str_list)
