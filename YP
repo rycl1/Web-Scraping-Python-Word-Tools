@@ -43,4 +43,4 @@ def parse_listing(keyword,place,testpagecount):
         
     
 
-parse_listing("dentists", "berkeley", 1)
+parse_listing("dentists", "chicago", 1)
