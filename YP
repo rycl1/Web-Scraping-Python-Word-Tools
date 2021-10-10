@@ -1,3 +1,4 @@
+#scraper to pull text from YP after location and type filled in
 import requests
 import re
 from bs4 import BeautifulSoup as bsoup
