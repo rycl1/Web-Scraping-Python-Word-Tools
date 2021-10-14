@@ -8,6 +8,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 import time
 
+#Non API solution
 
 
 url = "https://twitter.com/hashtag/HappyBirthdayZayn?src=tren"
